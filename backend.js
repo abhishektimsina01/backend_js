@@ -41,4 +41,22 @@ app.get("/Home", function(req, res){
     res.send('Hello ypur are in home');
 })
 
+//the app.get() handles the get request to the '/error' route
+//when the user requests for the '/error' http then the get() handles the requests by executing the code written inside the function
+// Route that throws an error
+app.get('/error', (req, res, next) => {
+    const err = new Error('Something went wrong!'); 
+    next(err); // Pass the error to the error-handling middleware
+  });
+  
+  // Error-handling middleware
+  app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+  });
+  
 app.listen(3000);
+
+
+// app.get('/about', ...): Defines a GET route for /about. When someone visits this URL, the response "This is the About Page." will be sent.
+// app.post('/submit', ...): Defines a POST route for /submit. This route would handle form submissions or data sent from the frontend to the backend.
