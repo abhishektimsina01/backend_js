@@ -7,9 +7,15 @@
 const express = require('express');
 const app = express();
 
+//middleware
+app.use(function(res,req,next){
+    console.log("hello");
+    next();
+})
+
 //when the / routes opens thent the function(Request Handler runs)
 app.get('/',function (req,res){
-    res.send('Hello World');
+    res.send('Hello world');
 })
 
 app.get("/Profile", function(req, res){
