@@ -1,4 +1,4 @@
-//when we install the express from the terminal using the npm i express then a node module is downloaded consisting of multiple packaged instead of the one package because they are the dependecies of all our packages
+//when we install the express from the terminal using the npm i express then a node module is downloaded consisting of multiple packaged instead of the one package because they are the dependecies of all our packages-----------------------1
 
 //npm i express
 //npm uninstall express
@@ -30,7 +30,15 @@ app.get('/',function (req,res){
 })
 
 app.get("/Profile", function(req, res){
-    res.send('Hello again');
+    res.send('Hello you got your profile https req');
+})
+
+app.get("/About", function(req, res){
+    res.send('Hello you got your Abput req');
+})
+
+app.get("/Home", function(req, res){
+    res.send('Hello ypur are in home');
 })
 
 app.listen(3000);
