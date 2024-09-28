@@ -13,7 +13,7 @@ const app = express();
 //middleware
 app.use(function(res,req,next){
     console.log("hello i am the first middleware and i am passing to the other middleware and if there is not any other middleware then the req is sent to the respective route for handling the req");
-    next();
+    next();x
 })
 
 app.use(function(res,req,next){
