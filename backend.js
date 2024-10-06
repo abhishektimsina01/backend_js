@@ -1,10 +1,20 @@
 //creating an express server:-
 
 const express = require("express");
-const res = require("express/lib/response");
 const app = express();
 
 //routing => get/post/patch... http method request to the specified route/path then the app.method() triggers the handler function which handles the function 
+
+app.use((req,res,next)=>{
+    if(req.url == "/" || "/about"){
+        console.log("Running the middleware before going to the route",req.url);
+    }
+    else{
+        res.sendStatus(404);
+    }
+    next();
+});
+
 app.get("/", (req, res)=>{
     res.send("This is the Main page");
 })
