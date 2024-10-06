@@ -14,7 +14,7 @@ app.post("/", (req,res)=>{
 })
 
 app.get("/About", (req,res)=>{
-    res.send("this is the About page.")
+    res.send("this is the About page.");
 })
 
 app.listen(8000, (err)=>{
