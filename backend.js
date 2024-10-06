@@ -3,18 +3,24 @@
 const express = require("express");
 const app = express();
 
-//routing => get/post/patch... http method request to the specified route/path then the app.method() triggers the handler function which handles the function 
+//routing => when the user makes the https request that may be     get/post/patch... http method request to the specified route/path then, the corresponding route method -app.method() triggers the handler function which handles the request. 
 
+//middleware
 app.use((req,res,next)=>{
     if(req.url == "/" || "/about"){
         console.log("Running the middleware before going to the route",req.url);
     }
     else{
-        res.sendStatus(404);
+        res.send(404);
     }
     next();
 });
 
+// app.get and app.post() are called as the routing methods.
+
+//when the server listens for the http request then if it matches the http methods and the http path/route of the request and the route handler that matches the method and the route/path is called and the specific handler function is called.
+
+//request ko method k ho ra kun route ko lagi gareko ho. tyo match
 app.get("/", (req, res)=>{
     res.send("This is the Main page");
 })
