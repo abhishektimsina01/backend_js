@@ -8,9 +8,18 @@ const app = express();
 //middleware
 // it gets accessed to the req amd the respond object as well as the next function which transfers the request to the next upcomming middleware or the specific route method for the req.
 
+//middleware are the functions that are always in the middle of the client/user's request and the route method that handles the request 
+
+//whenever any request approaches towards the server it first goes to the middleware where the function can access to the req and the response of the server and the next() that directs the request to the next middleware or the respective route method taht handles the req of the specific http method on the specific route.
+
+
 app.use((req,res,next)=>{
     if(req.url == "/" || "/about"){
         console.log("Running the middleware before going to the route",req.url);
+        console.log(req.headers);
+        // console.log("the properties of the req object is : \n",req);
+        console.log("the id of the user is:", req.query.user_id);
+        
     }
     else{
         res.send(404);
@@ -24,6 +33,7 @@ app.use((req,res,next)=>{
 
 //request ko method k ho ra kun route ko lagi gareko ho. tyo match
 app.get("/", (req, res)=>{
+    console.log(res.headers);
     res.send("This is the Main page");
 })
 
@@ -35,6 +45,6 @@ app.get("/About", (req,res)=>{
     res.send("this is the About page.");
 })
 
-app.listen(8000, (err)=>{
+app.listen(3000, (err)=>{
     console.log("the server has been connected");
 })
