@@ -3,7 +3,7 @@
 const express = require("express");
 const app = express();
 
-//routing => when the user makes the https request that may be     get/post/patch... http method request to the specified route/path then, the corresponding route method -app.method() triggers the handler function which handles the request. 
+//routing => when the user makes the https request that may be     get/post/patch... http method request to the specified route/path then, the correspondin g route method -app.method() triggers the handler function which handles the request. 
 
 //middleware
 // it gets accessed to the req amd the respond object as well as the next function which transfers the request to the next upcomming middleware or the specific route method for the req.
@@ -33,7 +33,6 @@ app.use((req,res,next)=>{
 
 //request ko method k ho ra kun route ko lagi gareko ho. tyo match
 app.get("/", (req, res)=>{
-    console.log(res.headers);
     res.send("This is the Main page");
 })
 
