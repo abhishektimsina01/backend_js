@@ -36,10 +36,12 @@ app.get("/", (req, res)=>{
     res.send("This is the Main page");
 })
 
+//post the data to the server
 app.post("/", (req,res)=>{
     res.send("Posted");
 })
 
+//get request to retrieve data from the server
 app.get("/About", (req,res)=>{
     res.send("this is the About page.");
 })
