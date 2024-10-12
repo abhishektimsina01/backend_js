@@ -14,13 +14,10 @@ const app = express();
 
 //we pass the req, res and the next object to the callback function that allows the middleware to access the http req from the client and also handle the response to the client from the server
 
-app.use ((req,res,next)=>{
+app.use((req,res,next)=>{
     if(req.url == "/" || "/about"){
         console.log("Running the middleware before going to the route",req.url);
-        console.log(req.headers);
-        // console.log("the properties of the req object is : \n",req);
-        console.log("the id of the user is:", req.query.user_id);
-        
+        console.log(req.headers);        
     }
     else{
         res.send(404);
@@ -53,9 +50,6 @@ app.post("/", (req,res)=>{
     res.send("Posted");
 })
 
-app.listen(3000, (err)=>{
-    console.log("the server has been connected");
-})
 
 //multiple routing method for same path then we can use the next method to transfer the flow from one route mrthofs to the other route method
 
@@ -72,4 +66,23 @@ app.use((req,res,next)=>{
 
 app.get("/About",(req,res)=>{
     console.log(`this is the second route for the path ${req.path}`)
+})
+
+// "/home" is path
+
+app.use("/home",(req,req,next)=>{
+    console.log("this is the /home path")
+    next()
+},function (req,res,next){
+    console.log("this is the /home page")
+    next()
+})
+
+app.get("/home",(req,res,next)=>{
+    res.send("This is the home page")
+})
+
+//open the server a=on the port 3000 and then listen for th requaest there
+app.listen(3000, (err)=>{
+    console.log("the server has been connected");
 })
