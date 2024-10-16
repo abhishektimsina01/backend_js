@@ -4,6 +4,7 @@ const fs = require("fs")
 const users_data = require("./MOCK_DATA.json")
 
 
+//logging the searched datas into the txt
 app.get("/users",(req,res)=>{
     res.send(`This is the ${req.path}`)
 })
@@ -22,6 +23,36 @@ app.get("/users/:id",(req,res)=>{
     } )
     
 })
+
+// adding new datas
+app.get("/add", (req,res)=>{
+    res.end(`This is ${req.path}`)
+})
+
+app.post("/add", (req,res)=>{
+    fs.appendFile("new_logs.txt", `${JSON.stringify(req.body)} \n\n\n`, (err)=>{
+        if(err){
+            res.send("Error has been encountered")
+        }
+        else{
+            res.json({name : "Abhishek"})
+            res.status(200).send("the login was added to the file")
+        }
+    })
+})
+
+
+// give all the users data to the frontend
+app.get("/get", (req,res)=>{
+    res.json(users_data)
+})
+
+
+app.get("/get/:id", (req,res)=>{
+    console.log(`the data of the person with the id ${req.params.id} id ${users_data.find(user => user.id == req.params.id)}`)
+    res.send(users_data.find(user => user.id == req.params.id))
+})
+
 
 app.listen(3000,(err)=>{
     if(err){
