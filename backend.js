@@ -3,6 +3,8 @@ const app = express()
 const fs = require("fs")
 const users_data = require("./MOCK_DATA.json")
 
+// parsing the form that comes from the client
+app.use("/add",express.urlencoded({extended:true}))
 
 //logging the searched datas into the txt
 app.get("/users",(req,res)=>{
@@ -35,7 +37,6 @@ app.post("/add", (req,res)=>{
             res.send("Error has been encountered")
         }
         else{
-            res.json({name : "Abhishek"})
             res.status(200).send("the login was added to the file")
         }
     })
@@ -53,6 +54,17 @@ app.get("/get/:id", (req,res)=>{
     res.send(users_data.find(user => user.id == req.params.id))
 })
 
+// add new data in the json file
+app.get("/json", (req,res)=>{
+    res.end("Done routing the path")
+})
+
+app.post("/json", (req,res)=>{
+    fs.appendFile("./MOCK_DATA", JSON.stringify(req.body), (err)=>{
+        console.log(err)
+        res.end("Done adding the data sent", req.body)
+    })
+})
 
 app.listen(3000,(err)=>{
     if(err){

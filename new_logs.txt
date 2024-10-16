@@ -1,33 +1,27 @@
+{"name":"Abhishek Timsina"} 
 
 
-
-undefined 
-
-
-undefined 
+{"name":"Abhishek Timsina"} 
 
 
-undefined 
+{"name":"Suraj kumar"} 
 
 
-undefined 
+{"name":"dsd"} 
 
 
-undefined 
+{"name":"dsd"} 
 
 
-undefined 
+{"name":"dsd"} 
 
 
-undefined 
+{"name":"dsd"} 
 
 
-undefined 
+{"name":"dsd"} 
 
 
-undefined 
-
-
-undefined 
+{"name":"Abhishek","age":"19","gender":"male"} 
 
 
