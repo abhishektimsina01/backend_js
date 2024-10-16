@@ -11,10 +11,13 @@ app.get("/users",(req,res)=>{
 app.get("/users/:id",(req,res)=>{
     const id = req.params.id
     console.log(id)
-    fs.appendFile("log.txt", `${JSON.stringify(users_data.find(user=> user.id == id))} \n\n`,(err)=>{
+    fs.appendFile("log.txt", `${JSON.stringify(users_data.find(user=> user.id == id))} \n\n\n`,(err)=>{
         if(err){
             console.log("an error has been encountered")
             res.status(500).send("error")
+        }
+        else{
+            res.end(`the id of the client is ${req.params.id}`)
         }
     } )
     
