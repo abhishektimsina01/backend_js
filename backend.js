@@ -64,6 +64,10 @@ admin.get("/",(req,res)=>{
     res.end("this is the / route of the router admin")
 })
 
+admin.post("/",(req,res)=>{
+    res.end(`this is the ${req.method} on the ${req.path}`)
+})
+
 app.use("/admin",admin)
 app.listen(3000,(err)=>{
     if(err){
