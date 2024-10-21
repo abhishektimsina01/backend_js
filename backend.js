@@ -2,7 +2,7 @@ const express = require("express")
 const app = express()
 const fs = require("fs")
 const users_data = require("./MOCK_DATA.json")
-
+const admin = express.Router()
 
 // parsing the form that comes from the client
 app.use("/add",express.urlencoded({extended:true}))
@@ -56,7 +56,15 @@ app.get("/get/:id", (req,res)=>{
     res.send(users_data.find(user => user.id == req.params.id))
 })
 
+//router controller
+admin.use((req,res,next)=>{
+    console.log(req.headers)
+})
+admin.get("/",(req,res)=>{
+    res.end("this is the / route of the router admin")
+})
 
+app.use("/admin",admin)
 app.listen(3000,(err)=>{
     if(err){
         console.log("an error has been encountered")
