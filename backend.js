@@ -1,7 +1,9 @@
 const express = require("express")
 const app = express()
 const fs = require("fs")
+const mongoose = require("mongoose")
 const users_data = require("./MOCK_DATA.json")
+const { type } = require("os")
 const admin = express.Router()
 
 // parsing the form that comes from the client
@@ -11,6 +13,30 @@ app.use("/add",express.urlencoded({extended:true}))
 app.get("/users",(req,res)=>{
     res.send(`This is the ${req.path}`)
 })
+
+//mongoDB and mongooe connection
+mongoose.connect("mongodb://127.0.0.1:27017/user_datas")
+                .then(()=>{console.log("mongodb connected")})
+                .catch((err)=>{console.log(err)})
+
+//schema
+const userSchema = new mongoose.Schema({
+    firtstName :{
+        type : String,
+        required : true
+    },
+    lastName :{
+        type : String,
+        required : false
+    },
+    email : {
+        type : String,
+        required : true,
+        unique : true
+    }
+})
+
+const User = mongoose.model("user", userSchema)
 
 app.get("/users/:id",(req,res)=>{
     const id = req.params.id
@@ -56,16 +82,20 @@ app.get("/get/:id", (req,res)=>{
     res.send(users_data.find(user => user.id == req.params.id))
 })
 
-//router controller
+// router controller
+
+
+
 admin.use((req,res,next)=>{
     console.log(req.headers)
+    next()
 })
 admin.get("/",(req,res)=>{
     res.end("this is the / route of the router admin")
 })
 
 admin.post("/",(req,res)=>{
-    res.end(`this is the ${req.method} on the ${req.path}`)
+    res.send(`this is the ${req.method} on the main ${req.path}`)
 })
 
 app.use("/admin",admin)
