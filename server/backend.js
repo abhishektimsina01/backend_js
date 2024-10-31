@@ -2,7 +2,7 @@ const express = require("express")
 const app = express()
 const fs = require("fs")
 const mongoose = require("mongoose")
-const users_data = require("./MOCK_DATA.json")
+const users_data = require("../MOCK_DATA.json")
 const { type } = require("os")
 const admin = express.Router()
 
@@ -82,10 +82,8 @@ app.get("/get/:id", (req,res)=>{
     res.send(users_data.find(user => user.id == req.params.id))
 })
 
+
 // router controller
-
-
-
 admin.use((req,res,next)=>{
     console.log(req.headers)
     next()
@@ -97,6 +95,7 @@ admin.get("/",(req,res)=>{
 admin.post("/",(req,res)=>{
     res.send(`this is the ${req.method} on the main ${req.path}`)
 })
+
 
 app.use("/admin",admin)
 app.listen(3000,(err)=>{
