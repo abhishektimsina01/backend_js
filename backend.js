@@ -1,151 +1,110 @@
 const express = require("express")
 const app = express()
-const fs = require("fs")
-const mongoose = require("mongoose")
-const users_data = require("./MOCK_DATA.json")
-const { type } = require("os")
-const admin = express.Router()
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-require('dotenv').config();
 
 
-
-// // parsing the form that comes from the client
-// app.use("/add",express.urlencoded({extended:true}))
-
-// //logging the searched datas into the txt
-// app.get("/users",(req,res)=>{
-//     res.send(`This is the ${req.path}`)
-// })
-
-// //mongoDB and mongooe connection
-// mongoose.connect("mongodb://127.0.0.1:27017/user_datas")
-//                 .then(()=>{console.log("mongodb connected")})
-//                 .catch((err)=>{console.log(err)})
-
-// //schema
-// const userSchema = new mongoose.Schema({
-//     firtstName :{
-//         type : String,
-//         required : true
-//     },
-//     lastName :{
-//         type : String,
-//         required : false
-//     },
-//     email : {
-//         type : String,
-//         required : true,
-//         unique : true
-//     }
-// })
-
-// const User = mongoose.model("user", userSchema)
-
-// app.get("/users/:id",(req,res)=>{
-//     const id = req.params.id
-//     console.log(id)
-//     fs.appendFile("log.txt", `${JSON.stringify(users_data.find(user=> user.id == id))} \n\n\n`,(err)=>{
-//         if(err){
-//             console.log("an error has been encountered")
-//             res.status(500).send("error")
-//         }
-//         else{
-//             res.end(`the id of the client is ${req.params.id}`)
-//         }
-//     } )
-    
-// })
+//routing
+//middleware
+//error handling
+//template
+//mongoose
 
 
-// // adding new datas
-// app.get("/add", (req,res)=>{
-//     res.end(`This is ${req.path}`)
-// })
+app.get("/", (req,res)=>{
+    res.send("this is the home page")
+    console.log(req.url)
+});
 
-// app.post("/add", (req,res)=>{
-//     fs.appendFile("new_logs.txt", `${JSON.stringify(req.body)} \n\n\n`, (err)=>{
-//         if(err){
-//             res.send("Error has been encountered")
-//         }
-//         else{
-//             res.status(200).send("the login was added to the file")
-//         }
-//     })
-// })
-
-
-// // give all the users data to the frontend
-// app.get("/get", (req,res)=>{
-//     res.json(users_data)
-// })
-
-
-// app.get("/get/:id", (req,res)=>{
-//     console.log(`the data of the person with the id ${req.params.id} id ${users_data.find(user => user.id == req.params.id)}`)
-//     res.send(users_data.find(user => user.id == req.params.id))
-// })
-
-
-// // router controller
-// admin.use((req,res,next)=>{
-//     console.log(req.headers)
-//     next()
-// })
-// admin.get("/",(req,res)=>{
-//     res.end("this is the / route of the router admin")
-// })
-
-// admin.post("/",(req,res)=>{
-//     res.send(`this is the ${req.method} on the main ${req.path}`)
-// })
-// app.use("/admin",admin)
-
-const user = []
-
-app.post("/register", async(req,res)=>{
-        const { username, password } = req.body;
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const user = { id: Date.now(), username, password: hashedPassword };
-        users.push(user);
-        res.status(201).json({ message: 'User registered successfully' });
+app.get("/about", (req,res)=>{
+    console.log("this is the about section")
+    res.end("this is the about section")
 })
 
-app.post('/login', async (req, res) => {
-    const { username, password } = req.body;
-    const user = users.find(u => u.username === username);
-  
-    if (!user) return res.status(400).json({ message: 'User not found' });
-  
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) return res.status(400).json({ message: 'Invalid password' });
-  
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token });
-  });   
+app.post("/log-in", (req,res)=>{
+    console.log(req.body)
+    res.end("the login was successfull.")
+})
+
+app.listen(8000, (err)=>{
+    console.log("the server has been connected successfully")
+});
 
 
-  const authenticateToken = (req, res, next) => {
-    const token = req.header('Authorization')?.split(' ')[1];
-    if (!token) return res.sendStatus(401);
-  
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-      if (err) return res.sendStatus(403);
-      req.user = user;
-      next();
-    });
-  };
-  
-  app.get('/protected', authenticateToken, (req, res) => {
-    res.json({ message: 'This is a protected route', user: req.user });
-  });   
 
-app.listen(process.env.PORT,(err)=>{
+
+
+//for working with the fs module or for working with the file using js we need to import the fs module
+const file = require("fs")
+
+//wrtie operation 
+//sync.d
+try{
+    file.writeFileSync("file1.txt", "Content to be added");
+    console.log("no error was occurred")
+}
+catch(err){
+    console.log("an error was occurred");
+}
+
+//async
+file.writeFile("file2.txt", "content to be added", (err)=>{
     if(err){
-        console.log("an error has been encountered")
+        console.log(err , " has occurred");
     }
     else{
-        console.log("Server has been connected")
+        console.log("no error was occurred");
     }
+})
+
+
+//append operation 
+//sync.
+try{
+    file.appendFileSync("file3.txt", "this is a sync operation\n")
+}
+catch(err){
+    console.log("there is an error \n", err)
+}
+
+//async.
+file.appendFile("file4.txt", "this is an async operation\n", (err)=>{
+    if(err){
+        console.log("there is an error\n", err)
+    }
+    else{
+        console.log("there was no error")
+    }
+})
+
+//reading operation from the file
+//sync
+//utf-8 is the form we want the data in
+try{
+    let data = file.readFileSync("file3.txt", "utf-8")
+    console.log(data)
+}
+catch(err){
+    console.log(err)
+}
+
+//async 
+file.readFile("file4.txt", "utf-8", (err, data)=>{
+    if(err){
+        console.log("An error has occurred")
+    }
+    else{
+        console.log(data)
+    }
+})
+
+file.unlink("file1.txt", (err)=>{
+    console.log("an error has ocurred during deleting the file")
+})
+file.unlink("file2.txt", (err)=>{
+    console.log("an error has ocurred during deleting the file")
+})
+file.unlink("file3.txt", (err)=>{
+    console.log("an error has ocurred during deleting the file")
+})
+file.unlink("file4.txt", (err)=>{
+    console.log("an error has ocurred during deleting the file")
 })
